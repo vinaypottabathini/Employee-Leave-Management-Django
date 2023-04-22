@@ -1,0 +1,20 @@
+3 models
+
+1- Employer
+	-id
+	- name (ex: name:Gridlex,  
+	- address
+
+2- Employee 
+	-id
+	- name (ex: name:Vinay, Pavan, Arun
+	- dob
+	- doj
+	-designaton
+	-department
+
+3- Salary
+	- emplyrId
+	- empId
+	- salary(ex: salary: 50000 in terms of CTC)
+	

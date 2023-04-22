@@ -1,0 +1,21 @@
+Employee Model- Add column
+		-Manager(boolean field)
+		-password			
+
+
+Create Model - Leaves
+		-date of apply of leave
+		-date for leave applied 
+		-description
+		-status(approved/rejected)(pending)
+		-Employer
+		-employee -applied emp
+		-employee -manager
+	
+
+
+
+
+
+
+
