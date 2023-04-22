@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+
+  <div class="jumbotron">
+    <h1>Register Employee!</h1>
+  </div>
+
+  <br>
+
+
+  <form action="{% url 'emp_app:create_employee' %}" method="post">
+    {%csrf_token%}
+    <div class="form-group">
+      <label class="form-label" style="display:inline-flex;">Employee Name&nbsp</label>
+      <input type="checkbox" name="manager" class="btn-check" id="btncheck1" style="display:inline-flex;" >
+      <label class="btn btn-outline-dark btn-sm" for="btncheck1" style="display:inline-flex;">Manager</label>
+      <input type="text" name="emp_name" class="form-control" placeholder="Enter Name" required>
+    </div>
+    <br>
+
+    <div class="form-group">
+      <label class="form-label" >Employer</label>
+      <select class="form-control" name="emplyr_name" required>
+        <option value="" disabled selected>Choose Employer</option>
+        {% for emplr in employers %}
+          <option value="{{emplr}}">{{emplr}}</option>
+          {% endfor %}
+      </select>
+    </div>
+    <br>
+
+    <div class="form-group">
+      <label class="form-label" for="">Date of Birth</label>
+      <input class="form-control" type="date" name="dob" >
+    </div>
+    <br>
+
+    <div class="form-group">
+      <label class="form-label" for="">Date of Join</label>
+      <input class="form-control" type="date" name="doj" >
+    </div>
+    <br>
+
+    <div class="form-group">
+      <label class="form-label" >Designation</label>
+      <input type="text" name="desig" class="form-control" placeholder="Enter Designation" required>
+    </div>
+    <br>
+
+    <div class="form-group">
+      <label class="form-label" >Department</label>
+      <input type="text" name="depart" class="form-control" placeholder="Enter Department" required>
+    </div>
+    <br>
+
+    <div class="form-group">
+      <input type="submit" class="btn btn-outline-info" value="Submit">
+    </div>
+    <br>
+
+
+
+  </form>
+
+{% endblock %}

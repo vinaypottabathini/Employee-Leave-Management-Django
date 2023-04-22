@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+
+<br>
+<h1>{{emplyr}} Company employees</h1>
+<br>
+
+<table class="table table-striped">
+  <thead>
+    <th>Name</th>
+    <th>Department</th>
+    <th>Salary CTC</th>
+    <th>Payroll</th>
+  </thead>
+
+  {% for emp in salemps %}
+  <tr>
+    <td>{{emp.user|capfirst}}</td>
+    {% for ep in employs %}
+      {% ifequal emp.user ep %}
+      <td>{{ep.depart}}</td>
+      {% endifequal %}
+      {%endfor%}
+      <td>{{emp.salary}}</td>
+      <td>
+          <form action="{% url 'emp_app:payroll' %}" method="post">
+              {%csrf_token%}
+              <input type="text" name="emp_name" value="{{emp.user}}" hidden>
+              <input type="number" name="ctc" value="{{emp.salary}}" hidden>
+              <input type="submit" class="btn btn-outline-info" value="CTC BreakUp">
+          </form>
+
+      </td>
+  </tr>
+  {%endfor%}
+</table>
+
+{% endblock %}

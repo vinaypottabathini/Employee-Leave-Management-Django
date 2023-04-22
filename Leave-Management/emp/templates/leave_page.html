@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+
+
+{% load tag_library %}
+  <div class="container" style="background-color:#fdfdfd; box-shadow: 0 2px 6px rgba(0,0,0,.15);">
+    <br>
+    <h1>Apply Leave!</h1>
+    <br>
+
+      <form action="{% url 'emp_app:store_leave' %}" method="post">
+          {%csrf_token%}
+
+          <div class="col-xs-12 col-md-2"  style="display:inline-flex">
+            <div class="form-group" >
+              <label class="form-label" >From Date:</label>
+                <input type="date" name="ldf" class="form-control" >
+            </div>
+          </div>
+          &emsp;&emsp;
+
+          <div class="col-xs-12 col-md-2" style="display:inline-flex">
+            <div class="form-group" >
+          <label class="form-label" >To Date:</label>
+          <input type="date" name="ldt" class="form-control" >
+        </div>
+      </div>
+      <br>
+      <br>
+
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea name="descript" rows="4" cols="30" class="form-control"></textarea>
+      </div>
+
+      <br>
+      <div class="form-group">
+        <input class="btn btn-outline-info" type="submit" name="" value="Submit">
+      </div>
+        <span style="color:red;" class="form-label">{{msg}}</span>
+      <br>
+      <!-- {% with lvs_taken=0 %}
+      {%for lv in leav %}
+        {% with from=lv.leave_date_from|date:"d"|to_int %}
+        {% with to=lv.leave_date_to|date:"d"|to_int %}
+      <span hidden>{{lvs_taken|add:from}}</span>
+      <span hidden>{{lvs_taken|subtract:to}}</span>
+      {%endwith%}
+      {%endwith%}
+      {%endfor%} -->
+      <input type="number" name="lvs_taken" value="{{leav|length}}" hidden>
+      <!-- <input type="number" name="lvs_taken" value="{{lvs_taken}}" hidden> -->
+
+      {%endwith%}
+    <input type="text" name="emplr" value="{{emp.emplyr_name}}" hidden>
+    <input type="text" name="emp_name" value="{{emp}}" hidden>
+  </form>
+
+</div>
+
+<br>
+<br>
+
+
+<div class="container" style="background-color:#fdfdfd; box-shadow: 0 2px 6px rgba(0,0,0,.15);">
+  <br>
+<h2>My Prior Leaves</h2>
+<table class="table table-striped">
+  <thead>
+    <th>Leave Date</th>
+    <th>No. of days</th>
+    <th>Description</th>
+    <th>Applied date</th>
+    <th>Approval Status</th>
+  </thead>
+
+  {% for lv in leav %}
+    {% with from=lv.leave_date_from|date:"d"|to_int %}
+    {% with to=lv.leave_date_to|date:"d"|to_int %}
+  <tr>
+    <td>{{lv.leave_date_from}}</td>
+    <td>{{from|subtract:to}}</td>
+    <td>{{lv.descript}}</td>
+    <td>{{lv.date_of_applied}}</td>
+    <td>{{lv.status}}</td>
+  </tr>
+  {%endwith%}
+  {%endwith%}
+
+  {%endfor%}
+
+</table>
+
+<br>
+<br>
+
+
+<form action="{% url 'emp_app:fromleavetohome' %}" method="post">
+  {% csrf_token%}
+  <input type="text" name="emp_name" value="{{emp}}" hidden>
+  <input type="submit" class="btn btn-outline-info" value="Back to Homepage">
+</form>
+
+<br>
+</div>
+<br>
+<br>
+
+{%endblock%}

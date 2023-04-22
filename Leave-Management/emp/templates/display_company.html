@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+
+<br>
+<h1>Choose Employer Company!</h1>
+<br>
+
+<form  action="{% url 'emp_app:show_employees' %}" method="post">
+  {%csrf_token%}
+  <div class="form-group">
+    <label class="form-label">Employer</label>
+    <select class="form-control" name="emplyr_name" required>
+      <option value="" disabled selected>choose employer company</option>
+      {% for emplr in employers %}
+        <option value="{{emplr}}">{{emplr}}</option>
+        {% endfor %}
+    </select>
+  </div>
+  <br>
+
+  <div class="form-group">
+    <input type="submit" class="btn btn-outline-info" value="Submit">
+  </div>
+  <br>
+
+  </form>
+
+
+{% endblock %}

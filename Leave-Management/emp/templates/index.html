@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+<script src="https://unpkg.com/ionicons@5.5.1/dist/ionicons.js"></script>
+  <div style="margin-left:415px;margin-top:30px;">
+    <h1 style="font-family: 'Audiowide', cursive;
+font-family: 'Orbitron', sans-serif; font-size:56px; font-weight:500" >Payroll</h1>
+  </div>
+  <br><br><br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+  <form class="inner" action='{% url 'emp_app:employer_form' %}' method="post">
+    {% csrf_token %}
+      <!-- <input type="submit" class="butt" value="Add Employer"> -->
+
+      <button type="submit" name="button" class="butt">
+        <span class="button__icon">
+          <ion-icon name="person-add-sharp"><img class="icon_size" src="/static/images/employer1.webp" ></ion-icon>
+        </span><br>
+        <span class="button__text">Add Employer</span>
+      </button>
+  </form>
+  &emsp;
+
+  <form class="inner" action='{% url 'emp_app:employee_form' %}' method="post">
+    {%csrf_token%}
+    <!-- <input type="submit" class="butt" value="Add Employee" > -->
+    <button type="submit" name="button" class="butt">
+      <span class="button__icon">
+        <ion-icon name="person-add-sharp"><img class="icon_size" src="/static/images/addemp2.png" ></ion-icon>
+      </span><br>
+      <span class="button__text">Add Employee</span>
+    </button>
+
+  </form>
+  &emsp;
+
+  <form class="inner" action='{% url 'emp_app:update_salary_page' %}' method="post">
+      {%csrf_token%}
+    <!-- <input type="submit" class="butt" value="Update Salary" > -->
+    <button type="submit" name="button" class="butt">
+      <span class="button__icon">
+        <ion-icon name="person-add-sharp"><img style="margin-right:5px;" class="icon_size" src="/static/images/salary.webp" ></ion-icon>
+      </span><br>
+      <span class="button__text">Update Salary</span>
+    </button>
+
+  </form>
+  &emsp;
+
+  <form class="inner" action="{% url 'emp_app:display_company' %}" method="post">
+    {%csrf_token%}
+    <!-- <input type="submit" class="butt" value="CTC BreakUp" > -->
+    <button type="submit" name="button" class="butt">
+      <span class="button__icon">
+        <ion-icon name="person-add-sharp"><img class="icon_size" src="/static/images/ctc.webp" ></ion-icon>
+      </span><br>
+      <span class="button__text">CTC BreakUp</span>
+    </button>
+
+  </form>
+{% endblock %}

@@ -1,0 +1,510 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+
+<form action="{% url 'emp_app:policy_page' %}" method="post">
+{%csrf_token%}
+
+<div class="container" style="background-color: #fdfdfd; border-left: 4px solid #219bd6; box-shadow: 0 2px 6px rgba(0,0,0,.15);">
+
+      <div class="container">
+
+            <div class="container">
+        <div class="col-lg-12 col-sm-12 col-md-12 mt-5 ">
+            <br>
+            <div class="psbox text-center mb-4">
+                <h2>
+                    Create Accrual Leave Policy
+                </h2>
+                <div class="underline align-center">
+                    <div class="line"></div>
+                </div>
+            </div>
+            <br>
+
+
+            <div class="col-md-12">
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <label>Leave Policy Name
+                        <span style="color: red;">*</span>:</label>
+                        <input type="text" class="form-control" id="top_name" name="top_name" value="" required="">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Leave Policy Description<span style="color: red;">*</span>:</label>
+                        <textarea type="text" cols="40" rows="1" class="form-control" id="top_desc" name="top_desc" required=""></textarea>
+                    </div>
+
+                </div>
+            </div><br>
+
+            <div class="col-lg-12 col-sm-12 col-md-12 mt-2 ">
+                <div class=" card col-md-12" style="background-color: #F1F3F4;" id="component_form">
+
+                    <div class="container">
+                        <div class="container">
+
+                                  <div class="" style="display:inline-flex;">
+                                        <div class="col-md-3">
+                                        <label class="form-label" style="margin:10px;">Effective after:<span style="color:red;">*</span></label>
+                                        </div>
+
+                                          <div class="col-md-2" style="margin:10px;">
+                                            <input type="number" name="eff" min="0" class="form-control" required>
+                                          </div>
+
+                                          <div class="form-group col-md-3" style="margin:10px;">
+                                            <select class="form-control" name="yorm">
+                                                <option value="m">Monthly</option>
+                                                <option value="y">Yearly</option>
+
+                                            </select>
+                                          </div>
+
+                                          <div class="col-md-1">
+                                          <label class="form-label" style="margin:10px;">From:</label>
+                                          </div>
+
+                                          <div class="col-md-4">
+                                            <select class="form-control" name="frm" style="margin:10px;">
+                                                <option value="j">Date of joining</option>
+                                                <option value="c">Date of confirmation</option>
+                                            </select>
+                                          </div>
+
+                                    </div>
+
+
+
+
+                          <div>
+
+
+
+
+                                  <div class="col-md-2" style="display:inline-flex;">
+                                  <label class="form-label" style="margin:10px;">Accrual:</label>
+                                  </div>
+
+                                  <div class="col-md-2" style="display:inline-flex;">
+                                    <select id="acc" class="form-control" name="ac_y_m" onchange="show()">
+                                        <option disabled selected>Choose</option>
+                                        <option value="1">Yearly</option>
+                                        <option value="2">Monthly</option>
+                                    </select>
+                                  </div>
+
+                                  <div class="col-md-1" style="display:inline-flex;">
+                                  <label class="form-label" style="margin:10px;">on</label>
+                                  </div>
+
+                                  <div  class="col-md-5" style="display:inline-flex;">
+                                    <div id="showdat" class="col-md-2" style="visibility:hidden;display:none; margin-right:20px;">
+                                        <select class="form-control" name="dat">
+                                          <option value="0">date</option>
+                                          {% for n in mdays%}
+                                          <option value="{{n}}">{{n}}</option>
+                                          {%endfor%}
+                                        </select>
+                                    </div>
+
+
+                                  <div id="showdateNmonth" class="col-md-5" style="visibility:hidden;display:none;" >
+
+                                    <div class="col-md-5" style="display:inline-flex;">
+                                      <select class="form-control" name="datm">
+                                        <option value="0">date</option>
+                                        {% for n in mdays%}
+                                        <option value="{{n}}">{{n}}</option>
+                                        {%endfor%}
+                                      </select>
+                                    </div>
+
+                                    <div class="col-md-5" style="display:inline-flex;">
+                                      <select class="form-control" name="mth" style="display:inline;">
+                                          <option value="">month</option>
+                                          {% for m in month %}
+                                          <option value="{{m}}">{{m}}</option>
+                                          {%endfor%}
+                                      </select>
+                                    </div>
+                                  </div>
+
+
+                                  <div class="col-md-5">
+                                    <input type="number" name="ac_ndays" class="form-control" placeholder="No. of Days">
+                                  </div>
+
+                                </div>
+                          </div>
+
+
+
+
+                          <div class="">
+
+                                                              <div class="col-md-2" style="display:inline-flex;">
+                                                              <label class="form-label" style="margin:10px;">Reset:</label>
+                                                              </div>
+
+                                                              <div class="col-md-2" style="display:inline-flex;">
+                                                                <select id="acc1" class="form-control" name="re_y_m" onchange="show()">
+                                                                    <option disabled selected>Choose</option>
+                                                                    <option value="y">Yearly</option>
+                                                                    <option value="m">Monthly</option>
+                                                                </select>
+                                                              </div>
+
+                                                              <div class="col-md-1" style="display:inline-flex;">
+                                                              <label class="form-label" style="margin:10px;">on</label>
+                                                              </div>
+
+                                                              <div  class="col-md-5" style="display:inline-flex;">
+                                                                <div id="showdat1" class="col-md-2" style="visibility:hidden;display:none; margin-right:20px;">
+                                                                    <select class="form-control" name="re_dat">
+                                                                      <option value="0">date</option>
+                                                                      {% for n in mdays%}
+                                                                      <option value="{{n}}">{{n}}</option>
+                                                                      {%endfor%}
+                                                                    </select>
+                                                                </div>
+
+
+                                                              <div id="showdateNmonth1" class="col-md-5" style="visibility:hidden;display:none;" >
+
+                                                                <div class="col-md-5" style="display:inline-flex;">
+                                                                  <select class="form-control" name="re_datm">
+                                                                    <option value="0">date</option>
+                                                                    {% for n in mdays%}
+                                                                    <option value="{{n}}">{{n}}</option>
+                                                                    {%endfor%}
+                                                                  </select>
+                                                                </div>
+
+                                                                <div class="col-md-5" style="display:inline-flex;">
+                                                                  <select class="form-control" name="re_mth" style="display:inline;">
+                                                                      <option value="">month</option>
+                                                                      {% for m in month %}
+                                                                      <option value="{{m}}">{{m}}</option>
+                                                                      {%endfor%}
+                                                                  </select>
+                                                                </div>
+                                                              </div>
+                                                          </div>
+
+                          </div>
+
+
+
+
+                          <div style="display:inline-flex;">
+                              <div class="col-md-3" style="margin-left:200px;">
+                                  <select id="cf" class="form-control" name="cf" onchange="show1()">
+                                    <option disabled selected>choose</option>
+                                    <option value="1">Carry Forward</option>
+                                    <option value="2">Carry Forward with Expiry</option>
+                                    <option value="3">Carry Forward with Overall limit</option>
+                                  </select>
+                              </div>
+
+                              <div style="display:inline-flex;">
+                                      <div  style="display:inline-flex; margin-left:20px;">
+                                            <select class="form-control" name="cf_meter" id="meter" onchange="show2()">
+                                              <option disabled selected>choose</option>
+                                              <option value="1">Units</option>
+                                              <option value="2">Percentages</option>
+                                            </select>
+                                      </div>
+
+                                      <div id="showUnits" class="col-md-3" style="visibility:hidden;display:none; margin-left:20px;">
+                                        <input type="number" name="cf_u" class="form-control" >
+                                      </div>
+
+                                      <div id="showPercent" class="col-md-3" style="visibility:hidden;display:none; margin-left:20px;">
+                                        <input type="number" name="cf_p" min="0" max="100" class="form-control" >
+                                      </div>
+
+                              </div>
+
+
+                              <div id="showExpiresin" style="visibility:hidden;display:none;">
+                                  <div>
+                                        <label class="form-label">Expires in</label>
+                                        <select id="exp" class="form-control" name="ex_y_m" onchange="show4()">
+                                            <option disabled selected>Choose</option>
+                                            <option value="1">Yearly</option>
+                                            <option value="2">Monthly</option>
+                                        </select>
+                                        <div id="showMonthunit" style="visibility:hidden;display:none; ">
+                                          <input type="number" name="ex_mth" min="1" max="12" class="form-control" placeholder="no. months">
+                                        </div>
+                                        <div id="showYearunit"  style="visibility:hidden;display:none; ">
+                                          <input type="number" name="ex_y" min="1"  class="form-control" placeholder="no. years">
+                                        </div>
+                                  </div>
+
+
+                              </div>
+
+                              <div id="showOverallLimit" style="visibility:hidden;display:none; ">
+                                <div style="display:inline;">
+                                    <label class="form-label">Overall Limit</label>
+                                    <input type="number" name="ovr_lmt" class="form-control" >
+
+                                </div>
+                              </div>
+                          </div>
+                          <br>
+
+
+                          <div style="display:inline-flex; margin-left:200px;">
+                              <div class="">
+                                <label class="form-label">Encashment</label>
+                              </div>
+
+                              <div  style="display:inline-flex; margin-left:20px;">
+                                    <select class="form-control" name="en_mtr" id="metr" onchange="show5()">
+                                      <option disabled selected>choose</option>
+                                      <option value="1">Units</option>
+                                      <option value="2">Percentages</option>
+                                    </select>
+                              </div>
+
+                              <div id="showUnit" class="col-md-3" style="visibility:hidden;display:none; margin-left:20px;">
+                                <input type="number" name="en_u" class="form-control" >
+                              </div>
+
+                              <div id="showPerc" class="col-md-3" style="visibility:hidden;display:none; margin-left:20px;">
+                                <input type="number" name="en_p" min="0" max="100" class="form-control" >
+                              </div>
+
+                              <div class="col-md-4">
+                                <label class="form-label">Max Limit</label>
+                                <input type="number" name="en_ml" class="form-control">
+                              </div>
+
+                          </div>
+                          <br>
+                          <br>
+
+                          <div class="form-group" style="display:inline-flex;">
+                              <label class="form-label">Prorate accrual </label>
+                              <div class="form-group">
+                                  <select class="form-control" id="" class="" name="policy_type">
+                                      <option value="sp">Start of Policy</option>
+                                      <option value="snep">Start and End of Policy</option>
+                                      <option value="dnp">Do not Prorate</option>
+                                      <option value="dpa">Disable Prorate Accrual</option>
+                                  </select>
+                              </div>
+                          </div>
+
+
+
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+              </div>
+
+              <input type="text" name="emp" value="{{emp}}" hidden>
+              <input type="text" name="emplyr_name" value="{{emplr}}" hidden>
+            <br>
+        <div class="text">
+            <input type="submit" class="btn btn-primary" style="margin-top: 5px;margin-left: 3rem;background-color: #286090;" value="Submit">
+        </div>
+        <br>
+
+          </div>  </div>
+    </div>
+
+</form>
+
+<script type="text/javascript">
+
+  function show()
+  {
+    var k = document.getElementById('acc').value;
+    var g = document.getElementById('acc1').value;
+
+    if(k==1)
+    {
+      document.getElementById('showdateNmonth').style.display='block';
+      document.getElementById('showdateNmonth').style.visibility='visible';
+
+    }
+    else
+    {
+      document.getElementById('showdateNmonth').style.visibility='hidden';
+      document.getElementById('showdateNmonth').style.display='none';
+
+    }
+
+    if(k==2)
+    {
+      document.getElementById('showdat').style.display='block';
+      document.getElementById('showdat').style.visibility='visible';
+    }
+    else
+    {
+      document.getElementById('showdat').style.visibility='hidden';
+      document.getElementById('showdat').style.display='none';
+
+    }
+
+    if(g=='y')
+    {
+      document.getElementById('showdateNmonth1').style.display='block';
+      document.getElementById('showdateNmonth1').style.visibility='visible';
+
+    }
+    else
+    {
+      document.getElementById('showdateNmonth1').style.visibility='hidden';
+      document.getElementById('showdateNmonth1').style.display='none';
+
+    }
+
+    if(g=='m')
+    {
+      document.getElementById('showdat1').style.display='block';
+      document.getElementById('showdat1').style.visibility='visible';
+    }
+    else
+    {
+      document.getElementById('showdat1').style.visibility='hidden';
+      document.getElementById('showdat1').style.display='none';
+
+    }
+
+    return false;
+
+  }
+
+  function show1()
+  {
+    var c = document.getElementById('cf').value;
+
+    if(c==2)
+    {
+      document.getElementById('showExpiresin').style.display='block';
+      document.getElementById('showExpiresin').style.visibility='visible';
+    }
+    else
+    {
+      document.getElementById('showExpiresin').style.visibility='hidden';
+      document.getElementById('showExpiresin').style.display='none';
+    }
+
+    if(c==3)
+    {
+      document.getElementById('showOverallLimit').style.display='block';
+      document.getElementById('showOverallLimit').style.visibility='visible';
+    }
+    else
+    {
+      document.getElementById('showOverallLimit').style.visibility='hidden';
+      document.getElementById('showOverallLimit').style.display='none';
+    }
+    return false;
+
+  }
+
+
+
+
+  function show2()
+  {
+    var f = document.getElementById('meter').value;
+
+    if(f==1)
+    {
+      document.getElementById('showUnits').style.display='block';
+      document.getElementById('showUnits').style.visibility='visible';
+    }
+    else
+    {
+      document.getElementById('showUnits').style.visibility='hidden';
+      document.getElementById('showUnits').style.display='none';
+
+    }
+
+    if(f==2)
+    {
+      document.getElementById('showPercent').style.display='block';
+      document.getElementById('showPercent').style.visibility='visible';
+    }
+    else
+    {
+      document.getElementById('showPercent').style.visibility='hidden';
+      document.getElementById('showPercent').style.display='none';
+
+    }
+    return false;
+  }
+
+  function show4()
+  {
+    var d= document.getElementById('exp').value;
+
+    if(d==2)
+    {
+      document.getElementById('showMonthunit').style.display='block';
+      document.getElementById('showMonthunit').style.visibility='visible';
+    }
+    else
+    {
+      document.getElementById('showMonthunit').style.visibility='hidden';
+      document.getElementById('showMonthunit').style.display='none';
+    }
+
+    if(d==1)
+    {
+      document.getElementById('showYearunit').style.display='block';
+      document.getElementById('showYearunit').style.visibility='visible';
+    }
+    else
+    {
+      document.getElementById('showYearunit').style.visibility='hidden';
+      document.getElementById('showYearunit').style.display='none';
+    }
+    return false;
+  }
+
+  function show5()
+  {
+    var b = document.getElementById('metr').value;
+    if(b==1)
+    {
+      document.getElementById('showUnit').style.display='block';
+      document.getElementById('showUnit').style.visibility='visible';
+    }
+    else
+    {
+      document.getElementById('showUnit').style.visibility='hidden';
+      document.getElementById('showUnit').style.display='none';
+    }
+
+    if(b==2)
+    {
+      document.getElementById('showPerc').style.display='block';
+      document.getElementById('showPerc').style.visibility='visible';
+    }
+    else
+    {
+      document.getElementById('showPerc').style.visibility='hidden';
+      document.getElementById('showPerc').style.display='none';
+    }
+
+    return false;
+
+  }
+
+
+</script>
+
+{% endblock %}

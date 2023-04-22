@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+<br>
+<h1>CTC BreakUp!</h1>
+<br>
+
+<div class="form-group">
+  <table class="table table-striped">
+      {% for ep in emp %}
+      <tr>
+        <td>Employee Name:</td>
+        <td>{{ep.user|capfirst}}</td>
+      </tr>
+      <tr>
+        <td>Department:</td>
+        <td>{{ep.depart}}</td>
+      </tr>
+      <tr>
+        <td>Designation:</td>
+        <td>{{ep.desig}}</td>
+      </tr>
+      <tr>
+        <td>Date of Join:</td>
+        <td>{{ep.emp_doj}}</td>
+      </tr>
+      {%endfor%}
+  </table>
+</div>
+<br>
+
+<table class="table table-striped">
+  <thead>
+    <th>Earnings</th>
+    <th>Per Annum</th>
+    <th>Per Month</th>
+  </thead>
+
+  <tr>
+    <td>Basic</td>
+    <td>{{basic_pa}}</td>
+    <td>{{basic_pm}}</td>
+  </tr>
+
+  <tr>
+    <td>HRA</td>
+    <td>{{hra_pa}}</td>
+    <td>{{hra_pm}}</td>
+  </tr>
+
+  <tr>
+    <td>Employer PF</td>
+    <td>{{empf_pa}}</td>
+    <td>{{empf_pm}}</td>
+  </tr>
+
+  <tr>
+    <td>Special allowance</td>
+    <td>{{spc_alw_pa}}</td>
+    <td>{{spc_alw_pm}}</td>
+  </tr>
+
+  <tr>
+    <td>Gross</td>
+    <td>{{gross_pa}}</td>
+    <td>{{gross_pm}}</td>
+  </tr>
+
+  <tr>
+    <td>CTC</td>
+    <td>{{ctc}}</td>
+    <td>{{ctcpm}}</td>
+  </tr>
+
+</table>
+
+<br>
+
+{% endblock %}

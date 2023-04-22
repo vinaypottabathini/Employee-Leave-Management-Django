@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+
+  <br>
+  <div class="jumbotron">
+    <h1>Register Employer!</h1>
+  </div>
+  <br>
+
+  <form action="{% url 'emp_app:create_employer' %}" method="post">
+    {% csrf_token%}
+        <div class="form-group">
+          <label>Employer_Name</label>
+          <input type="text" name="employer_name" class='form-control' placeholder="Enter Name" required>
+        </div>
+        <br>
+
+
+        <div class="form-group">
+          <label>Employer_address</label>
+          <textarea name="address" rows="4" cols="80" class='form-control' placeholder="Enter address" required></textarea>
+        </div>
+        <br>
+
+
+    <div class="form-group">
+      <input type="submit" class="btn btn-outline-info" value="Submit">
+    </div>
+  </form>
+
+{% endblock %}

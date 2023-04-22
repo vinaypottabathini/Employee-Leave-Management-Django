@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+
+{% load tag_library %}
+<div class="container" style="background-color:#fdfdfd; box-shadow: 0 2px 6px rgba(0,0,0,.15);">
+  <br>
+
+<form action="{% url 'emp_app:approve_leaves' %}" method="post">
+{%csrf_token%}
+  <input type="text" name="emplr" value="{{emplr}}" hidden>
+  <input type="text" name="emp_name" value="{{emp}}" hidden>
+
+
+<h2>My Prior Leaves</h2>
+<table class="table table-striped">
+  <thead>
+    <th>Employee Name</th>
+    <th>Leave Date</th>
+    <th>No. of days</th>
+    <th>Description</th>
+    <th>Applied date</th>
+    <th>Approval Status</th>
+    <th>Permit</th>
+  </thead>
+
+  {% for lv in leav %}
+  {% with from=lv.leave_date_from|date:"d"|to_int %}
+  {% with to=lv.leave_date_to|date:"d"|to_int %}
+
+
+  {% ifequal lv.status "pending" %}
+
+  <tr>
+    <td>{{lv}}</td>
+    <td>{{lv.leave_date_from}}</td>
+    <td>{{from|subtract:to}}</td>
+    <td>{{lv.descript}}</td>
+    <td>{{lv.date_of_applied}}</td>
+    <td>{{lv.status}}</td>
+    <td>
+
+        <input type="number" name="pm" value="{{lv.id}}" hidden>
+        <input type="text" name="lvemp" value="{{lv.user}}" hidden>
+
+        <input type="submit" name="status" value="approve" class="btn btn-outline-success btn-sm" style="display:inline-flex">
+        <input type="submit" name="status" value="reject" class="btn btn-outline-danger btn-sm" style="display:inline-flex">
+    </td>
+  </tr>
+
+  {%endifequal%}
+  {%endwith%}
+  {%endwith%}
+  {%endfor%}
+
+</table>
+
+</form>
+
+<br>
+<br>
+
+
+<form action="{% url 'emp_app:fromapprovetohome' %}" method="post">
+  {% csrf_token%}
+  <input type="text" name="emp_name" value="{{emp}}" hidden>
+  <input type="submit" class="btn btn-outline-info" value="Back to Homepage">
+</form>
+
+<br>
+</div>
+<br>
+<br>
+
+
+
+{%endblock%}
